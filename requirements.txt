@@ -1,0 +1,6 @@
+textblob
+pandas
+streamlit
+cleantext
+seaborn
+matplotlib
