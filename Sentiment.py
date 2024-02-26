@@ -36,8 +36,8 @@ with st.expander('Analyze CSV'):
 
     if upl:
         df = pd.read_csv(upl)
-        
-        df['score'] = df['CONTENT'].apply(score)
+        column_name = st.selectbox('Select column for sentiment analysis:', df.columns)
+        df['score'] = df[column_name].apply(score)
         df['analysis'] = df['score'].apply(analyze)
         st.write(df.head(10))
 
