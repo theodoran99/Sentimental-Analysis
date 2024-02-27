@@ -35,18 +35,19 @@ with st.expander('Analyze CSV'):
             return 'Neutral'
 
     if upl:
-        json_ext = ('.json')
-        csv_ext = ('.csv')
-        for file in upl:
-            if file.endswith(json_ext): #bug here
-                df = pd.read_json(file)
-                df.to_csv('json_file.csv', encoding='utf-8',index = False)
-                df = pd.read_csv('json_file.csv',encoding='utf-8')
+        df = pd.read_csv(upl)
+       # json_ext = ('.json')
+        #csv_ext = ('.csv')
+        #for file in upl:
+         #   if file.endswith(json_ext): #bug here
+          #      df = pd.read_json(file)
+           #     df.to_csv('json_file.csv', encoding='utf-8',index = False)
+            #    df = pd.read_csv('json_file.csv',encoding='utf-8')
                
-            elif file.endswith(csv_ext):
-                df = pd.read_csv(file)
-            else:
-                st.error("The file type is not supported")
+            #elif file.endswith(csv_ext):
+             #   df = pd.read_csv(file)
+            #else:
+             #   st.error("The file type is not supported")
                 
             column_name = st.selectbox('Select column for sentiment analysis:', df.columns)
             df['score'] = df[column_name].apply(score)
