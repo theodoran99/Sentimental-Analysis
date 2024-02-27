@@ -80,7 +80,7 @@ with st.expander('Analyze CSV'):
         # Lookup word in CSV and perform sentiment analysis
         lookup_word = st.text_input('Lookup word in CSV:')
         if lookup_word:
-            filtered_df = df[df['CONTENT'].str.contains(lookup_word, case=False, na=False)]
+            filtered_df = df[df[column_name].str.contains(lookup_word, case=False, na=False)]
             if not filtered_df.empty:
                 sentiment_counts_lookup = filtered_df['analysis'].value_counts()
                 fig_lookup, ax_lookup = plt.subplots()
