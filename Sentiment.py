@@ -35,11 +35,20 @@ with st.expander('Analyze CSV'):
             return 'Neutral'
 
     if upl:
-        df = pd.read_csv(upl)
-        column_name = st.selectbox('Select column for sentiment analysis:', df.columns)
-        df['score'] = df[column_name].apply(score)
-        df['analysis'] = df['score'].apply(analyze)
-        st.write(df.head(10))
+        json_ext = ('.json')
+        csv_ext = ('.csv')
+        for files in upl:
+            if files.endswith(json_ext):
+                df = pd.read_json(upl)
+                df.to_csv('json_file.csv', encoding='utf-8',index = False)
+                df = pd.read_csv('json_file.csv',encoding='utf-8')
+               
+            elif files.endswith(csv_ext):
+                df = pd.read_csv(upl)
+            column_name = st.selectbox('Select column for sentiment analysis:', df.columns)
+            df['score'] = df[column_name].apply(score)
+            df['analysis'] = df['score'].apply(analyze)
+            st.write(df.head(10))
 
         # Pie chart
         sentiment_counts = df['analysis'].value_counts()
