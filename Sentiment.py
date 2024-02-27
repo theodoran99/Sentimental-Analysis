@@ -49,10 +49,10 @@ with st.expander('Analyze CSV'):
             #else:
              #   st.error("The file type is not supported")
                 
-            column_name = st.selectbox('Select column for sentiment analysis:', df.columns)
-            df['score'] = df[column_name].apply(score)
-            df['analysis'] = df['score'].apply(analyze)
-            st.write(df.head(10))
+        column_name = st.selectbox('Select column for sentiment analysis:', df.columns)
+        df['score'] = df[column_name].apply(score)
+        df['analysis'] = df['score'].apply(analyze)
+        st.write(df.head(10))
 
         # Pie chart
         sentiment_counts = df['analysis'].value_counts()
