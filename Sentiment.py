@@ -97,13 +97,13 @@ with st.expander('Analyze CSV'):
                 filtered_df = df[df[column_name].str.contains(word, case=False, na=False)]
                 if not filtered_df.empty:
                     sentiment_counts_lookup = filtered_df['analysis'].value_counts()
-                    fig_lookup, ax_lookup = plt.subplots(figsize=(1,1))
+                    fig_lookup, ax_lookup = plt.subplots()
                     ax_lookup.pie(sentiment_counts_lookup, labels=sentiment_counts_lookup.index, autopct='%1.1f%%', startangle=90)
                     ax_lookup.axis('equal')
                     st.write(fig_lookup)
     
                     # Scatter plot for the specific word
-                    plt.figure(figsize=(1,1))
+                    plt.figure()
                     sns.scatterplot(data=filtered_df, x=filtered_df.index, y='score', hue='analysis', palette='viridis')
                     plt.xlabel('Index')
                     plt.ylabel('Sentiment Score')
