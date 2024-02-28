@@ -108,7 +108,7 @@ with st.expander('Analyze CSV'):
                     sns.scatterplot(data=filtered_df, x=filtered_df.index, y='score', hue='analysis', palette='viridis')
                     plt.xlabel('Index')
                     plt.ylabel('Sentiment Score')
-                    plt.title(f'Sentiment Analysis Scatter Plot for "{lookup_word}"')
+                    plt.title(f'Sentiment Analysis Scatter Plot for "{lookup_words}"')
                     st.pyplot()
                 else:
                     st.write("The word doesn't exist in the CSV content.")
