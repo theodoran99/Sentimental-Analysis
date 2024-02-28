@@ -38,7 +38,7 @@ with st.expander('Analyze CSV'):
         for file in upl:
             if file.endswith('.json'): #bug here
                 df = pd.read_json(file)
-                df.to_csv('json_file.csv', encoding='utf-8',index = False)
+                #df.to_csv('json_file.csv', encoding='utf-8',index = False)
                
             elif file.endswith('.csv'):
                 df = pd.read_csv(file)
