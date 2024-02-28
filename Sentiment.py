@@ -38,15 +38,12 @@ with st.expander('Analyze CSV'):
         for file in upl:
             if file.endswith('.csv'):
                 df = pd.read_csv(file)
-                
             elif file.endswith('.json'):
                 df = pd.read_json(file) #bug here
                 df.to_csv('json_file.csv', encoding='utf-8',index = False)
-               
             elif file.endswith('.parquet'):
                 df = pd.read_parquet(file)
                 df.to_csv('parquet.csv', index = False)
-                df = pd.read_csv('parquet.csv')
             else:
                 st.error("The file type is not supported")
                 
