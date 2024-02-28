@@ -95,7 +95,7 @@ with st.expander('Analyze CSV'):
         if lookup_words:
             lookup_words_list = [word.strip() for word in lookup_words.split(',')]
             for word in lookup_words_list:
-                filtered_df = df[df[column_name].str.contains(lookup_word, case=False, na=False)]
+                filtered_df = df[df[column_name].str.contains(word, case=False, na=False)]
                 if not filtered_df.empty:
                     sentiment_counts_lookup = filtered_df['analysis'].value_counts()
                     fig_lookup, ax_lookup = plt.subplots()
