@@ -91,25 +91,27 @@ with st.expander('Analyze CSV'):
             st.error("Thank you for submitting your data. We've analyzed the sentiment from the provided CSV, and while the results lean towards the negative, we see this as an opportunity for growth and refinement. We'll delve into the data to identify key areas for improvement and work diligently to enhance the user experience. Your feedback is invaluable, and we're committed to striving for a more positive sentiment in the future.")
 
         # Lookup word in CSV and perform sentiment analysis
-        lookup_word = st.text_input('Lookup word in CSV:')
-        if lookup_word:
-            filtered_df = df[df[column_name].str.contains(lookup_word, case=False, na=False)]
-            if not filtered_df.empty:
-                sentiment_counts_lookup = filtered_df['analysis'].value_counts()
-                fig_lookup, ax_lookup = plt.subplots()
-                ax_lookup.pie(sentiment_counts_lookup, labels=sentiment_counts_lookup.index, autopct='%1.1f%%', startangle=90)
-                ax_lookup.axis('equal')
-                st.write(fig_lookup)
-
-                # Scatter plot for the specific word
-                plt.figure()
-                sns.scatterplot(data=filtered_df, x=filtered_df.index, y='score', hue='analysis', palette='viridis')
-                plt.xlabel('Index')
-                plt.ylabel('Sentiment Score')
-                plt.title(f'Sentiment Analysis Scatter Plot for "{lookup_word}"')
-                st.pyplot()
-            else:
-                st.write("The word doesn't exist in the CSV content.")
+        lookup_words = st.text_input('Lookup words in CSV (separate by commas):')
+        if lookup_words:
+            lookup_words_list = [word.strip() for word in lookup_words.split(',')]
+            for word in lookup_words_list:
+                filtered_df = df[df[column_name].str.contains(lookup_word, case=False, na=False)]
+                if not filtered_df.empty:
+                    sentiment_counts_lookup = filtered_df['analysis'].value_counts()
+                    fig_lookup, ax_lookup = plt.subplots()
+                    ax_lookup.pie(sentiment_counts_lookup, labels=sentiment_counts_lookup.index, autopct='%1.1f%%', startangle=90)
+                    ax_lookup.axis('equal')
+                    st.write(fig_lookup)
+    
+                    # Scatter plot for the specific word
+                    plt.figure()
+                    sns.scatterplot(data=filtered_df, x=filtered_df.index, y='score', hue='analysis', palette='viridis')
+                    plt.xlabel('Index')
+                    plt.ylabel('Sentiment Score')
+                    plt.title(f'Sentiment Analysis Scatter Plot for "{lookup_word}"')
+                    st.pyplot()
+                else:
+                    st.write("The word doesn't exist in the CSV content.")
             
             
              # Pop-up message
