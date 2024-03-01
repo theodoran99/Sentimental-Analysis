@@ -52,10 +52,10 @@ with st.expander('Analyze CSV'):
     
         # Pie chart
         sentiment_counts = df['analysis'].value_counts()
-        fig, ax = plt.subplots()
-        ax.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=90)
-        ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-        st.write(fig)
+        fig1, ax1 = plt.subplots()
+        ax1.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=90)
+        ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
     
     
         @st.cache_data
@@ -66,13 +66,15 @@ with st.expander('Analyze CSV'):
         csv = convert_df(df)
     
         # Scatter plot for sentiment analysis
-        plt.figure()
-        st.set_option('deprecation.showPyplotGlobalUse', False)
-        sns.scatterplot(data=df, x=df.index, y='score', hue='analysis', palette='viridis')
-        plt.xlabel('Index')
-        plt.ylabel('Sentiment Score')
-        plt.title('Sentiment Analysis Scatter Plot')
-        st.pyplot()
+        fig2, ax2 = plt.subplots()
+        sns.scatterplot(data=df, x=df.index, y='score', hue='analysis', palette='viridis', ax=ax2)
+        ax2.set_xlabel('Index')
+        ax2.set_ylabel('Sentiment Score')
+        ax2.set_title('Sentiment Analysis Scatter Plot')
+
+        # Display side by side
+        st.pyplot(fig1)
+        st.pyplot(fig2)
             
         # Pop-up message
         positive_count = (df['analysis'] == 'Positive').sum()
