@@ -74,12 +74,12 @@ with st.expander('Analyze CSV'):
 
         # Display side by side
         col1, col2 = st.columns(2)
-                with col1:
-                    st.write("Pie Chart:")
-                    st.pyplot(fig1)
-                with col2:
-                    st.write("Scatter Plot:")
-                    st.pyplot(fig2)
+        with col1:
+            st.write("Pie Chart:")
+            st.pyplot(fig1)
+        with col2:
+            st.write("Scatter Plot:")
+            st.pyplot(fig2)
             
         # Pop-up message
         positive_count = (df['analysis'] == 'Positive').sum()
