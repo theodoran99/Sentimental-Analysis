@@ -37,7 +37,7 @@ with st.expander('Analyze CSV'):
     if upl:
         for file in upl:
             if file.endswith('.csv'):
-            #    df = pd.read_csv(file)
+                df = pd.read_csv(file)
           #  elif file.endswith('.parquet'):
             #    df = pd.read_parquet(file)
             #    df.to_csv('parquet.csv', index = False)
