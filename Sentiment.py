@@ -34,7 +34,7 @@ with st.expander('Analyze CSV'):
         else:
             return 'Neutral'
 
-   # if upl:
+    if upl:
        # for file in upl:
            # if file.endswith('.csv'):
               #  df = pd.read_csv(file)
