@@ -43,8 +43,8 @@ with st.expander('Analyze CSV'):
             #    df.to_csv('parquet.csv', index = False)
           #  else:
            #     st.error("The file type is not supported")
-        for file in upl:
-            df = pd.read_csv(file)
+ 
+        df = pd.read_csv(upl)
         column_name = st.selectbox('Select column for sentiment analysis:', df.columns)
         df['score'] = df[column_name].apply(score)
         df['analysis'] = df['score'].apply(analyze)
