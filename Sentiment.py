@@ -130,3 +130,75 @@ with st.expander('Analyze CSV'):
             file_name='sentiment.csv',
             mime='text/csv',
         )
+with st.expander('Compare CSVs'):
+    file1 = st.file_uploader('Upload file 1')
+    file2 = st.file_uploader('Upload file 2')
+
+    def score(x):
+        blob1 = TextBlob(x)
+        return blob1.sentiment.polarity
+
+    def analyze(x):
+        if x >= 0.5:
+            return 'Positive'
+        elif x <= -0.5:
+            return 'Negative'
+        else:
+            return 'Neutral'
+
+    if file1 and file2:
+        data = []
+        for file in [file1, file2]:
+            file_name = file.name.lower() if file else None
+            if file_name and file_name.endswith('.csv'):
+                df = pd.read_csv(file)
+            elif file_name and file_name.endswith('.parquet'):
+                df = pd.read_parquet(file)
+                df.to_csv(f'{file_name}.csv', index=False)
+            else:
+                st.error("One or both of the file types are not supported")
+                break  # Exit the loop if an unsupported file type is encountered
+            data.append(df)
+        if len(data) == 2:  # Ensure both files were processed successfully
+            column_names = [st.selectbox(f'Select column for sentiment analysis (File {i}):', df.columns) for i, df in enumerate(data, start=1)]
+
+
+            for i, df in enumerate(data, start=1):
+                df['score'] = df[column_names[i-1]].apply(score)
+                df['analysis'] = df['score'].apply(analyze)
+                st.write(f"Data from File {i}:")
+                st.write(df.head(10))
+
+                # Create pie chart
+                sentiment_counts = df['analysis'].value_counts()
+                fig1, ax1 = plt.subplots()
+                ax1.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=90)
+                ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+                # Create scatter plot
+                fig2, ax2 = plt.subplots()
+                sns.scatterplot(data=df, x=df.index, y='score', hue='analysis', palette='viridis', ax=ax2)
+                ax2.set_xlabel('Index')
+                ax2.set_ylabel('Sentiment Score')
+                ax2.set_title('Sentiment Analysis Scatter Plot')
+
+                # Display both graphs side by side
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.write("Pie Chart:")
+                    st.pyplot(fig1)
+                with col2:
+                    st.write("Scatter Plot:")
+                    st.pyplot(fig2)
+
+                positive_count = (df['analysis']== 'Positive').sum()
+                neutral_count = (df['analysis']=='Neutral').sum()
+                negative_count =(df['analysis']=='Negative').sum()
+                # Download button
+                csv = df.to_csv().encode('utf-8')
+                st.download_button(
+                    label=f"Download data from File {i} as CSV",
+                    data=csv,
+                    file_name=f'sentiment_file{i}.csv',
+                    mime='text/csv',
+                    )
