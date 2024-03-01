@@ -130,6 +130,7 @@ with st.expander('Analyze CSV'):
             file_name='sentiment.csv',
             mime='text/csv',
         )
+        
 with st.expander('Compare CSVs'):
     file1 = st.file_uploader('Upload file 1')
     file2 = st.file_uploader('Upload file 2')
