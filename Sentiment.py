@@ -33,7 +33,7 @@ with st.expander('Analyze CSV'):
             return 'Negative'
         else:
             return 'Neutral'
-
+    csv = None
     if upl:
         for file in upl:
             if file.endswith('.csv'):
@@ -123,13 +123,13 @@ with st.expander('Analyze CSV'):
 
 
                
-                
-        st.download_button(
-            label="Download data as CSV",
-            data=csv,
-            file_name='sentiment.csv',
-            mime='text/csv',
-        )
+        if csv is not None:   
+            st.download_button(
+                label="Download data as CSV",
+                data=csv,
+                file_name='sentiment.csv',
+                mime='text/csv',
+            )
         
 with st.expander('Compare CSVs'):
     file1 = st.file_uploader('Upload file 1')
