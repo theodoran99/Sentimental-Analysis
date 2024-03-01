@@ -158,7 +158,6 @@ with st.expander('Compare CSVs'):
                 df.to_csv(f'{file_name}.csv', index=False)
             else:
                 st.error("One or both of the file types are not supported")
-                break  # Exit the loop if an unsupported file type is encountered
             data.append(df)
         if len(data) == 2:  # Ensure both files were processed successfully
             column_names = [st.selectbox(f'Select column for sentiment analysis (File {i}):', df.columns) for i, df in enumerate(data, start=1)]
