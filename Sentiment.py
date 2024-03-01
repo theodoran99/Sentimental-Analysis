@@ -34,16 +34,17 @@ with st.expander('Analyze CSV'):
         else:
             return 'Neutral'
 
-    if upl:
-        for file in upl:
-            if file.endswith('.csv'):
-                df = pd.read_csv(file)
+   # if upl:
+       # for file in upl:
+           # if file.endswith('.csv'):
+              #  df = pd.read_csv(file)
           #  elif file.endswith('.parquet'):
             #    df = pd.read_parquet(file)
             #    df.to_csv('parquet.csv', index = False)
           #  else:
            #     st.error("The file type is not supported")
-                
+        for file in upl:
+            df = pd.read_csv(file)
         column_name = st.selectbox('Select column for sentiment analysis:', df.columns)
         df['score'] = df[column_name].apply(score)
         df['analysis'] = df['score'].apply(analyze)
