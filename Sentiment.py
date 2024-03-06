@@ -216,8 +216,8 @@ with st.expander('Compare CSVs'):
                                 ha='center', va='center', fontsize=11, color='black', xytext=(0, 5),
                                 textcoords='offset points')
     
-            plt.tight_layout()
-            st.pyplot(fig)
+                plt.tight_layout()
+                st.pyplot(fig)
             
 
 
