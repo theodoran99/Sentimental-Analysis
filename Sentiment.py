@@ -221,14 +221,14 @@ with st.expander('Compare CSVs'):
             
 
 
-                positive_count = (df['analysis']== 'Positive').sum()
-                neutral_count = (df['analysis']=='Neutral').sum()
-                negative_count =(df['analysis']=='Negative').sum()
-                # Download button
-                csv = df.to_csv().encode('utf-8')
-                st.download_button(
-                    label=f"Download data from File {i} as CSV",
-                    data=csv,
-                    file_name=f'sentiment_file{i}.csv',
-                    mime='text/csv',
-                    )
+            positive_count = (df['analysis']== 'Positive').sum()
+            neutral_count = (df['analysis']=='Neutral').sum()
+            negative_count =(df['analysis']=='Negative').sum()
+            # Download button
+            csv = df.to_csv().encode('utf-8')
+            st.download_button(
+                label=f"Download data from File {i} as CSV",
+                data=csv,
+                file_name=f'sentiment_file{i}.csv',
+                mime='text/csv',
+                )
