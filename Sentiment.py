@@ -200,10 +200,8 @@ with st.expander('Compare CSVs'):
                     st.write("Scatter Plot:")
                     st.pyplot(fig2)
             
-            #Bar graph
-            fig, axes = plt.subplots(1, 2, figsize=(12, 6))
-    
-            for i, df in enumerate(data, start=1):
+                #Bar graph
+                fig, axes = plt.subplots(1, 2, figsize=(12, 6))
                 df['score'] = df[column_names[i-1]].apply(score)
                 df['analysis'] = df['score'].apply(analyze)
                 sentiment_counts = df['analysis'].value_counts()
@@ -221,6 +219,8 @@ with st.expander('Compare CSVs'):
             plt.tight_layout()
             st.pyplot(fig)
             
+
+
                 positive_count = (df['analysis']== 'Positive').sum()
                 neutral_count = (df['analysis']=='Neutral').sum()
                 negative_count =(df['analysis']=='Negative').sum()
