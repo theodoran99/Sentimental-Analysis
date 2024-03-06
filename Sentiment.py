@@ -200,8 +200,9 @@ with st.expander('Compare CSVs'):
                     st.write("Scatter Plot:")
                     st.pyplot(fig2)
             
-                #Bar graph
-                fig, axes = plt.subplots(1, 2, figsize=(12, 6))
+            #Bar graph
+            fig, axes = plt.subplots(1, 2, figsize=(12, 6))
+            for i, df in enumerate(data, start=1):
                 df['score'] = df[column_names[i-1]].apply(score)
                 df['analysis'] = df['score'].apply(analyze)
                 sentiment_counts = df['analysis'].value_counts()
@@ -215,9 +216,10 @@ with st.expander('Compare CSVs'):
                     ax.annotate(f'{p.get_height()}', (p.get_x() + p.get_width() / 2., p.get_height()),
                                 ha='center', va='center', fontsize=11, color='black', xytext=(0, 5),
                                 textcoords='offset points')
-    
-                plt.tight_layout()
-                st.pyplot(fig)
+
+            plt.tight_layout()
+            st.write("Comparison of Sentiment Analysis:")
+            st.pyplot(fig)
             
 
 
