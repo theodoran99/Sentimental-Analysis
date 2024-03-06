@@ -200,14 +200,14 @@ with st.expander('Compare CSVs'):
                     st.write("Scatter Plot:")
                     st.pyplot(fig2)
                 
-             # Download button
-            csv = df.to_csv().encode('utf-8')
-            st.download_button(
-                label=f"Download data from File {i} as CSV",
-                data=csv,
-                file_name=f'sentiment_file{i}.csv',
-                mime='text/csv',
-                )      
+                 # Download button
+                csv = df.to_csv().encode('utf-8')
+                st.download_button(
+                    label=f"Download data from File {i} as CSV",
+                    data=csv,
+                    file_name=f'sentiment_file{i}.csv',
+                    mime='text/csv',
+                    )      
             
             #Bar graph
             fig, axes = plt.subplots(1, 2, figsize=(12, 6))
