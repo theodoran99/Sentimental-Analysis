@@ -157,6 +157,7 @@ with st.expander('Compare CSVs'):
 
     if file1 and file2:
         data = []
+        file_names =[]
         for file in [file1, file2]:
             file_name = file.name.lower() if file else None
             if file_name and file_name.endswith('.csv'):
@@ -168,6 +169,7 @@ with st.expander('Compare CSVs'):
                 st.error("One or both of the file types are not supported")
                 break  # Exit the loop if an unsupported file type is encountered
             data.append(df)
+            file_names.append(file_name)
         if len(data) == 2:  # Ensure both files were processed successfully
             column_names = [st.selectbox(f'Select column for sentiment analysis (File {i}):', df.columns) for i, df in enumerate(data, start=1)]
 
@@ -175,7 +177,7 @@ with st.expander('Compare CSVs'):
             for i, df in enumerate(data, start=1):
                 df['score'] = df[column_names[i-1]].apply(score)
                 df['analysis'] = df['score'].apply(analyze)
-                st.write(f"Data from File {i}:")
+                st.write(f"Data from {file_names[i-1]}:")
                 st.write(df.head(10))
 
                 # Create pie chart
@@ -194,18 +196,18 @@ with st.expander('Compare CSVs'):
                 # Display both graphs side by side
                 col1, col2 = st.columns(2)
                 with col1:
-                    st.write("Pie Chart:")
+                    st.write(f"Pie Chart for {file_names[i-1]}:")
                     st.pyplot(fig1)
                 with col2:
-                    st.write("Scatter Plot:")
+                    st.write(f"Scatter Plot for {file_names[i-1]}:")
                     st.pyplot(fig2)
                 
                  # Download button
                 csv = df.to_csv().encode('utf-8')
                 st.download_button(
-                    label=f"Download data from File {i} as CSV",
+                    label=f"Download data from {file_names[i-1]} as CSV",
                     data=csv,
-                    file_name=f'sentiment_file{i}.csv',
+                    file_name=f'sentiment_{file_names[i-1]}.csv',
                     mime='text/csv',
                     )      
             
@@ -235,4 +237,3 @@ with st.expander('Compare CSVs'):
             positive_count = (df['analysis']== 'Positive').sum()
             neutral_count = (df['analysis']=='Neutral').sum()
             negative_count =(df['analysis']=='Negative').sum()
-
